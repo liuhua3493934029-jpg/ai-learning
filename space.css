@@ -1,0 +1,50 @@
+/* Isolated theme: the original stylesheet remains the source of truth for Classic. */
+.theme-switch{display:flex;gap:2px;border:1px solid var(--line);padding:3px;border-radius:20px;flex-shrink:0}.theme-switch button{border:0;background:transparent;color:var(--muted);border-radius:16px;padding:7px 11px;font-size:11px;min-height:32px}.theme-switch button[aria-pressed=true]{background:var(--forest);color:var(--paper)}
+.space-canvas,.space-story,.space-meter{display:none}
+html[data-theme=space]{color-scheme:dark;--paper:#080d17;--card:#101723;--ink:#e5eaf2;--muted:#a5b1c4;--line:#ffffff20;--forest:#c6d9eb;--sage:#233446;--accent:#c1dbf6;background:#080d17}
+html[data-theme=space] body{background:transparent;color:var(--ink)}
+html[data-theme=space] .space-canvas{display:block;position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;background:#080d17}
+html[data-theme=space] .space-story{display:block}
+html[data-theme=space] .site-header{border-color:#ffffff25;position:relative;z-index:2}
+html[data-theme=space] .brand-mark{background:#e2eaf1;color:#102030}
+html[data-theme=space] .brand-caption,html[data-theme=space] .local-label{color:#b3c0d0}
+html[data-theme=space] .theme-switch button[aria-pressed=true]{background:#dbe8f5;color:#152332}
+.space-act{min-height:90svh;display:flex;align-items:center;position:relative;isolation:isolate}
+.space-act:first-child{min-height:calc(100svh - 100px)}
+.space-copy{max-width:570px;padding:50px 0;opacity:var(--reveal,1);transform:translate3d(0,var(--lift,0px),0);will-change:transform,opacity}
+.space-overline{font:11px ui-monospace,monospace;letter-spacing:.25em;color:#b3c8e0;display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.space-overline:before{content:'';width:36px;height:1px;background:#a5bbd1}
+.space-title{font-family:var(--serif);font-size:clamp(48px,6.8vw,94px);font-weight:400;letter-spacing:-.05em;line-height:1.15;margin:0 0 28px;text-wrap:balance;text-shadow:0 3px 40px #02051180}
+.space-title em{font-weight:400;color:#b0c9e4;font-style:normal}
+.space-text{max-width:330px;color:#c0ccdc;font-size:13px;line-height:2;letter-spacing:.035em}
+.space-index{font:10px ui-monospace,monospace;letter-spacing:.15em;color:#8fa6bd;margin-top:40px}
+.space-act:nth-child(2) .space-copy{margin-left:auto;max-width:450px}.space-act:nth-child(3) .space-copy{max-width:510px}.space-act:nth-child(4){justify-content:center;text-align:center}.space-act:nth-child(4) .space-text{margin-inline:auto}.space-act:nth-child(4) .space-overline{justify-content:center}
+.space-link{display:inline-flex;align-items:center;gap:25px;padding:14px 0;border-bottom:1px solid #afc4dc;text-decoration:none;color:#e5eef8;font-size:12px;margin-top:22px;min-height:44px}
+.space-meter{position:fixed;right:20px;top:50%;z-index:10;flex-direction:column;gap:15px;transform:translateY(-50%)}html[data-theme=space] .space-meter{display:flex}.space-meter a{width:24px;height:24px;display:grid;place-items:center;text-decoration:none;color:#9eacc0;font:9px monospace}.space-meter a[aria-current=true]{color:#fff;border:1px solid #b0c4de;border-radius:50%}
+html[data-theme=space] .intro{padding-top:70px;border-top:1px solid #ffffff30;min-height:220px}html[data-theme=space] .intro .eyebrow{color:#b4cbe5}html[data-theme=space] .intro h1{font-size:clamp(27px,4vw,46px);font-weight:400}
+html[data-theme=space] .continue-card{background:#0b1422e8;border:1px solid #ffffff20}html[data-theme=space] .continue-card::after{display:none}html[data-theme=space] .continue-source,html[data-theme=space] .continue-top,html[data-theme=space] .continue-index{color:#adbed2}html[data-theme=space] .continue-link{background:#dce7f3;color:#172536}
+html[data-theme=space] .progress-card{background:#152336e8;border-color:#ffffff20}html[data-theme=space] .progress-top,html[data-theme=space] .count,html[data-theme=space] .progress-value>span:last-child,html[data-theme=space] .progress-caption{color:#b7c8db}html[data-theme=space] .progress{background:#354357}html[data-theme=space] .fill{background:#aecde9}
+html[data-theme=space] .sidebar{background:transparent}html[data-theme=space] .filter{color:#bac6d6}html[data-theme=space] .filter.active{background:#203247;border-color:#60748d;color:#e6eef8}html[data-theme=space] .filter:hover{background:#253347}html[data-theme=space] .filter-count{color:#b2c3d8}html[data-theme=space] .sidebar-note strong,html[data-theme=space] .sidebar-note svg{color:#c4d8eb}
+html[data-theme=space] .course-grid{grid-template-columns:1fr;gap:0}html[data-theme=space] .card{background:#08111bd9;border:0;border-top:1px solid #ffffff25;border-radius:0;box-shadow:none;padding:28px 28px 0;margin:0}html[data-theme=space] .card.next{background:#162639e8;border-top-color:#9fbedc}html[data-theme=space] .card:hover{background:#142131ee;box-shadow:none}html[data-theme=space] .card.done{background:#0b1622dc}html[data-theme=space] .card-top{margin-bottom:12px}html[data-theme=space] .card h3{font-size:22px;font-weight:500}html[data-theme=space] .card .meta,html[data-theme=space] .step,html[data-theme=space] .platform,html[data-theme=space] .badge,html[data-theme=space] .description,html[data-theme=space] .note{color:#b9c7d9}html[data-theme=space] .badge.current,html[data-theme=space] .badge.success{color:#c1dfef}html[data-theme=space] .badge.current::before{background:#c5e2ff}html[data-theme=space] .card-actions{border-top:0;min-height:60px}html[data-theme=space] .note{margin-bottom:7px}html[data-theme=space] .link{color:#d1e6fc}html[data-theme=space] .toggle{color:#cedceb;border-color:#5c7189;background:#172737}html[data-theme=space] .toggle:hover{background:#2f4256}html[data-theme=space] .toggle.donebtn{color:#c5e4e3;background:#1b3339;border-color:#4b7179}
+html[data-theme=space] .backup{background:#101c2aee;border-color:#ffffff25}html[data-theme=space] .backup-icon{background:#1f3347;border-color:#4b6078;color:#d0e1f2}html[data-theme=space] .utility{background:#24364b;border-color:#566a81;color:#dce8f6}html[data-theme=space] .utility.primary{background:#dbe8f3;color:#1a2a3b}html[data-theme=space] .backup-details summary,html[data-theme=space] .reset,html[data-theme=space] .page-footer{color:#afc4dc}html[data-theme=space] dialog{background:#142235;color:#e7eef7}html[data-theme=space] .toast{background:#1c3046;border-color:#6a819b}
+html[data-theme=space][data-renderer=fallback] body{background:radial-gradient(ellipse at 85% 18%,#32405b,transparent 35%),radial-gradient(ellipse at 10% 60%,#252343,transparent 45%),#070d18;background-attachment:fixed}
+@media(max-width:800px){html[data-theme=space] .sidebar{background:#0b1421f5}.space-meter{right:3px}.space-act:nth-child(2) .space-copy{margin-left:15%}.space-title{font-size:clamp(45px,8vw,70px)}}
+@media(max-width:580px){.theme-switch button{padding:6px 9px}.space-act{min-height:85svh;align-items:flex-end}.space-act:first-child{min-height:calc(100svh - 77px)}.space-copy{padding:50px 12px 65px 0;max-width:100%}.space-title{font-size:53px}.space-text{font-size:12px;max-width:270px;text-shadow:0 2px 12px #000}.space-overline{font-size:9px;margin-bottom:22px}.space-act:nth-child(2) .space-copy{margin-left:0}.space-act:nth-child(4){align-items:center}.space-meter{display:none!important}html[data-theme=space] .card{padding:24px 18px 0}html[data-theme=space] .card h3{font-size:19px}html[data-theme=space] .intro{padding-top:40px}.space-index{margin-top:25px}}
+@media(prefers-reduced-motion:reduce){.space-copy{transform:none!important;opacity:1!important;will-change:auto}}
+/* The selector stays reachable throughout the journey without shifting the classic header. */
+.theme-switch{position:fixed;right:22px;bottom:22px;z-index:25;background:var(--paper);box-shadow:0 4px 20px #0002}
+@media(max-width:580px){.theme-switch{right:16px;bottom:16px}.toast{bottom:76px}}
+.space-act:nth-child(3) .space-title{font-size:clamp(44px,5.1vw,74px)}
+.space-act:nth-child(3) .space-copy{margin-left:auto;max-width:500px}
+@media(max-width:580px){.space-act:nth-child(3) .space-copy{margin-left:0}.space-act:nth-child(3) .space-title{font-size:44px}}
+.space-act:nth-child(4) .space-copy{max-width:900px}.space-act:nth-child(4) .space-title{font-size:clamp(40px,6vw,84px)}
+
+/* Arrival and settling are exposure changes, never scroll interception. */
+html[data-theme=space] .space-canvas{opacity:0;transition:opacity 1.1s ease}
+html[data-theme=space][data-space-ready=true] .space-canvas{opacity:1}
+html[data-theme=space][data-space-ready=true][data-space-chapter="4"] .space-canvas{opacity:.38}
+html[data-theme=space][data-renderer=fallback] .space-canvas{display:none}
+html[data-theme=space] .space-act:first-child .space-copy{animation:space-arrival 1.15s ease both}
+html[data-theme=space] .intro .eyebrow::before{content:"05 / RETURN TO YOUR ORBIT";display:block;margin-bottom:14px;font:10px ui-monospace,monospace;letter-spacing:.2em;color:#c0d4ed}
+@keyframes space-arrival{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:blur(0)}}
+@media(prefers-reduced-motion:reduce){html[data-theme=space] .space-canvas{transition:none}html[data-theme=space] .space-copy{animation:none!important}}
