@@ -8,7 +8,7 @@ const http = require('node:http');
 const root = path.resolve(__dirname, '..');
 
 (async () => {
-  const files = {'/':'index.html', '/index.html':'index.html', '/space.css':'space.css', '/space.js':'space.js'};
+  const files = {'/':'index.html', '/index.html':'index.html', '/space.css':'space.css', '/space.js':'space.js', '/weft.css':'weft.css', '/weft.js':'weft.js'};
   const server = http.createServer((request, response) => {
     const file = files[new URL(request.url, 'http://localhost').pathname];
     if (!file) { response.writeHead(404); response.end(); return; }

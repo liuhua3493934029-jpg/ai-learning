@@ -16,6 +16,7 @@
   let cachedMaps = [];
   let frame = 0, last = 0, elapsed = 0, current = 0, target = 0;
   let active = false, initialized = false, contextLost = false, renderDirty = true;
+  let selectedTheme = 'classic';
   let retainedCourseId = null;
   let ambientMotion = true;
   let quality = 1, slowTime = 0, warmFrames = 0, lastChapter = -1, lastTypeProgress = -1;
@@ -360,14 +361,16 @@
 
   function select(theme, persist = true) {
     const nextActive = theme === 'space';
-    if (initialized && active === nextActive) return;
+    if (initialized && selectedTheme === theme) return;
     const anchor = persist ? readingAnchor() : null;
     const previousAnchoring = root.style.overflowAnchor;
     const previousBodyAnchoring = document.body.style.overflowAnchor;
     if (anchor) { root.style.overflowAnchor = 'none'; document.body.style.overflowAnchor = 'none'; }
     active = nextActive;
+    selectedTheme = theme;
     initialized = true;
-    root.dataset.theme = active ? 'space' : 'classic';
+    root.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]').content = theme === 'space' ? '#080d17' : theme === 'weft' ? '#e7e8e1' : '#f6f6f0';
     choices.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.themeChoice === theme)));
     story.inert = meter.inert = !active;
     if (persist) {
@@ -426,5 +429,5 @@
   });
   addEventListener('pagehide', () => { cancelAnimationFrame(frame); frame = 0; });
   addEventListener('pageshow', () => { last = 0; resize(); schedule(); });
-  select(root.dataset.theme === 'space' ? 'space' : 'classic', false);
+  select(['classic', 'space', 'weft'].includes(root.dataset.theme) ? root.dataset.theme : 'classic', false);
 })();
