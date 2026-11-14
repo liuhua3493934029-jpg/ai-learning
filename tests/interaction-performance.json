@@ -1,0 +1,25 @@
+{
+  "browser": "146.0.7680.31",
+  "viewport": "1440x900",
+  "courseToggleP95Ms": 6.6,
+  "classicWeftRoundTripP95Ms": 35.7,
+  "samples": {
+    "courseToggleMs": [
+      6.599999999860302,
+      5.100000000093132,
+      4.5,
+      4.099999999860302,
+      4.300000000046566,
+      4.199999999953434
+    ],
+    "classicWeftRoundTripMs": [
+      35.700000000186265,
+      20.799999999813735,
+      17.100000000093132,
+      17.300000000046566,
+      17.5,
+      18.0999999998603
+    ]
+  },
+  "note": "In-page synchronous handler timings; excludes protocol overhead and is not a substitute for device-level input latency measurement."
+}

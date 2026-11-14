@@ -1,0 +1,21 @@
+{
+  "browser": "146.0.7680.31",
+  "environment": "cloud Chromium, software graphics",
+  "weftScroll": {
+    "viewport": "1280x900",
+    "samples": 115,
+    "medianMs": 16.7,
+    "p95Ms": 33.4,
+    "maxMs": 50.0
+  },
+  "interaction": {
+    "viewport": "1440x900",
+    "courseToggleP95Ms": 10.8,
+    "classicWeftRoundTripP95Ms": 27.6,
+    "samples": {
+      "courseToggleMs": [10.8, 8.1, 7.8, 7.7, 9.0, 4.3],
+      "classicWeftRoundTripMs": [27.6, 26.5, 17.1, 16.9, 18.0, 16.2]
+    }
+  },
+  "note": "Integration rerun in a repository copy. In-page synchronous timings; not a hardware-independent 60 FPS guarantee."
+}

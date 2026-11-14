@@ -20,7 +20,7 @@ def main():
     except OSError as error:
         parser.exit(1, f'无法启动预览：{error}。可使用 --port 8001 更换端口。\n')
     url = f'http://127.0.0.1:{server.server_address[1]}/'
-    print(f'学习手记预览：{url}\n右下角切换「经典 / 星空」。按 Ctrl+C 停止。', flush=True)
+    print(f'学习手记预览：{url}\n页边切换「经典 / 星空 / 山海」。按 Ctrl+C 停止。', flush=True)
     if not args.no_browser:
         threading.Timer(.3, lambda: webbrowser.open(url)).start()
     try:
