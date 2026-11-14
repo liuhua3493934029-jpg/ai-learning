@@ -8,7 +8,7 @@ const http = require('node:http');
 const root = path.resolve(__dirname, '..');
 
 (async () => {
-  const files = {'/':'index.html', '/index.html':'index.html', '/space.css':'space.css', '/space.js':'space.js'};
+  const files = {'/':'index.html', '/index.html':'index.html', '/space.css':'space.css', '/space.js':'space.js', '/terrain.css':'terrain.css', '/terrain.js':'terrain.js', '/weft.css':'weft.css', '/weft.js':'weft.js'};
   const server = http.createServer((request, response) => {
     const file = files[new URL(request.url, 'http://localhost').pathname];
     if (!file) { response.writeHead(404); response.end(); return; }
@@ -125,8 +125,62 @@ const root = path.resolve(__dirname, '..');
     await unavailable.goto(url);
     assert.equal(await unavailable.getAttribute('html','data-renderer'), 'fallback');
     assert.equal(await unavailable.locator('#pct').textContent(), '30%');
+
+    // Third theme: the contour survey must switch, persist, redraw and fit every width.
+    await page.setViewportSize({width: 1280, height: 844});
+    await page.evaluate(() => scrollTo({top: 0, behavior: 'instant'}));
+    await page.locator('[data-theme-choice=terrain]').click();
+    assert.equal(await page.getAttribute('html', 'data-theme'), 'terrain');
+    assert.ok(await page.locator('.terrain-map').isVisible());
+    assert.equal(await page.locator('.theme-switch button').count(), 4);
+    assert.equal(await page.getAttribute('meta[name=theme-color]', 'content'), '#e4e4da');
+    assert.equal(await page.locator('.terrain-map').evaluate(node => node.getBoundingClientRect().height > 150), true);
+    const canvasInk = await page.evaluate(() => {
+      const canvas = document.getElementById('terrain-canvas');
+      const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+      let painted = 0;
+      for (let i = 3; i < pixels.length; i += 4) if (pixels[i]) painted++;
+      return painted;
+    });
+    assert.ok(canvasInk > 10000, 'contour canvas must actually be drawn');
+    const surveyBefore = await page.evaluate(() => document.getElementById('terrain-canvas').toDataURL().length);
+    await page.locator('[data-course-id=new-spec] [data-action=toggle]').click();
+    await page.waitForTimeout(500);
+    assert.equal(await page.locator('#pct').textContent(), '50%');
+    assert.equal(await page.locator('#terrain-legend').textContent(), '已学 50 / 100');
+    assert.match(await page.locator('#terrain-pin-label').textContent(), /50%/);
+    const surveyAfter = await page.evaluate(() => document.getElementById('terrain-canvas').toDataURL().length);
+    assert.notEqual(surveyBefore, surveyAfter, 'progress must redraw the survey');
+    await page.reload();
+    assert.equal(await page.getAttribute('html', 'data-theme'), 'terrain');
+    assert.ok(await page.locator('.terrain-map').isVisible());
+    assert.equal(await page.locator('#pct').textContent(), '50%');
+    // Reading position survives switching away and back.
+    await page.evaluate(() => {
+      const course = document.querySelector('[data-course-id=old-5]');
+      scrollTo({top: course.getBoundingClientRect().top + scrollY - 100, behavior: 'instant'});
+    });
+    const terrainTop = (await page.locator('[data-course-id=old-5]').boundingBox()).y;
+    await page.locator('[data-theme-choice=classic]').click();
+    assert.equal(await page.locator('.terrain-map').isVisible(), false);
+    assert.ok(Math.abs((await page.locator('[data-course-id=old-5]').boundingBox()).y - terrainTop) < 3);
+    await page.locator('[data-theme-choice=terrain]').click();
+    assert.ok(Math.abs((await page.locator('[data-course-id=old-5]').boundingBox()).y - terrainTop) < 3);
+    for (const width of [320, 390, 768, 1024, 1280, 1440]) {
+      await page.setViewportSize({width, height: 844});
+      await page.waitForTimeout(120);
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `terrain overflows at ${width}px`);
+    }
+    // At zero progress the pin still has a place to stand: the coast, labelled as the foot.
+    await page.setViewportSize({width: 1280, height: 844});
+    await page.evaluate(() => localStorage.setItem('ai_learning_tracker_v2', JSON.stringify({version: 2, statuses: {'old-1': 'todo', 'old-2': 'todo', 'old-3': 'todo'}})));
+    await page.reload();
+    await page.waitForTimeout(700);
+    assert.equal(await page.locator('#pct').textContent(), '0%');
+    assert.equal(await page.locator('#terrain-pin').isVisible(), true);
+    assert.match(await page.locator('#terrain-pin-label').textContent(), /山脚/);
     assert.deepEqual(errors, []);
-    console.log('PASS: courses, progress, v1 migration, backup round trip, invalid imports, persistent themes, reading position, graphics resource reuse, reduced motion, responsive layout and WebGL fallback/recovery.');
+    console.log('PASS: courses, progress, v1 migration, backup round trip, invalid imports, persistent themes, reading position, graphics resource reuse, reduced motion, responsive layout, three-theme switching, contour redraw and WebGL fallback/recovery.');
   } finally {
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));

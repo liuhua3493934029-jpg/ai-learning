@@ -1,0 +1,9 @@
+{
+  "browser": "146.0.7680.31",
+  "viewport": "1280x900",
+  "samples": 115,
+  "medianMs": 16.7,
+  "p95Ms": 33.4,
+  "maxMs": 50,
+  "note": "Cloud Chromium timing; useful for regression comparison, not a hardware-independent 60 FPS guarantee."
+}
