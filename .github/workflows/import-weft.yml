@@ -1,0 +1,40 @@
+name: Import verified WEFT delivery
+
+on:
+  push:
+    branches:
+      - theme/kimi
+
+permissions:
+  contents: write
+
+jobs:
+  import-delivery:
+    if: github.repository == 'liuhua3493934029-jpg/ai-learning'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout theme branch
+        uses: actions/checkout@v4
+        with:
+          ref: theme/kimi
+          fetch-depth: 0
+
+      - name: Download and verify accepted delivery
+        run: |
+          curl --fail --location --retry 3 --output /tmp/weft.zip "https://aka.doubaocdn.com/s/ywkzOnHI9N"
+          echo "bd626392e428c16731232cee53c74889ee3c452e3e7683c2b268525e557ef1c2  /tmp/weft.zip" | sha256sum -c -
+          unzip -q /tmp/weft.zip -d /tmp/weft
+          rsync -a --delete --exclude=.git --exclude=.github /tmp/weft/ai-learning/ ./
+          rm -f .github/workflows/import-weft.yml
+
+      - name: Commit exact project files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No project changes to import"
+            exit 0
+          fi
+          git commit -m "Import complete WEFT project delivery"
+          git push origin HEAD:theme/kimi
